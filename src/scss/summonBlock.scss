@@ -1,0 +1,27 @@
+@use 'variables' as v;
+
+.summon-name {
+    font-size: 1.8em;
+    font-family: v.$spectral-sc;
+}
+
+.type-line {
+    font-style: italic;
+}
+
+.feature-name {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.section-divider {
+    border-bottom: 2px solid red;
+    margin: 0.3em 0;
+    @include v.alegreya-sans-sc-light;
+    font-size: 1.5em;
+}
+
+.stat-name {
+    font-weight: bold;
+    color: red;
+}
