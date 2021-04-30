@@ -11,7 +11,7 @@ interface Speed {
     swim?: number;
 }
 
-interface Attributes {
+interface AbilityScores {
     str: number;
     dex: number;
     con: number;
@@ -55,7 +55,8 @@ interface Attack {
     additionalText?: string | ContentFunc;
 }
 
-interface SummonMode extends Partial<Omit<Summon, 'hp' | 'speed'>> {
+interface SummonMode extends Partial<Omit<Summon, 'name' | 'hp' | 'speed'>> {
+    name: string;
     hp?: {
         base: number;
     };
@@ -71,7 +72,7 @@ interface Summon {
     baseAC: number;
     hp: HP;
     speed: Speed;
-    attributes: Attributes;
+    abilityScores: AbilityScores;
     damageResistances?: DamageType[];
     damageImmunities?: DamageType[];
     conditionImmunities?: Condition[];

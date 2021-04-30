@@ -3,9 +3,9 @@ import { calcMod, sortByName, toTitleCase } from '../utils';
 import { toWords } from 'number-to-words';
 import style from '../scss/summonBlock.scss';
 
-const renderAttributeMod = (score: number, index: number) => {
+const renderAbilityScoreMod = (score: number, index: number) => {
     return (
-        <td key={'attribute' + index}>
+        <td key={'abilityScore' + index}>
             {score} ({calcMod(score) >= 0 ? '+' + calcMod(score) : calcMod(score)})
         </td>
     );
@@ -16,7 +16,7 @@ const renderInfoList = (title: string, listToRender: string[] | undefined) => {
         return <React.Fragment />;
     }
     return (
-        <div>
+        <div className={style.statList}>
             <span className={style.statName}>{title}</span>{' '}
             {listToRender.sort().map((item, index) => (
                 <React.Fragment key={`${title}${index}`}>
@@ -67,8 +67,10 @@ const renderDmg = (damage: Damage[], spellLevel: SpellLevel) => (
         {damage.map((dmg, index) => (
             <React.Fragment key={'damage' + index}>
                 {index >= 1 ? ' + ' : ''}
-                {dmg.dice.number}d{dmg.dice.size}
-                {dmg.modifier ? ' + ' + (dmg.modifier + spellLevel) : ''} {dmg.type} damage
+                <span className={style.damageDice}>
+                    {dmg.dice.number}d{dmg.dice.size}
+                    {dmg.modifier ? ' + ' + (dmg.modifier + spellLevel) : ''} {dmg.type} damage
+                </span>
             </React.Fragment>
         ))}
     </span>
@@ -104,38 +106,38 @@ export interface SummonBlockProps {
 export const SummonBlock: React.FC<SummonBlockProps> = ({ summon: summonIn, summonMode, spellLevel, spellAttack, spellDC }) => {
     const summon = mergeModeIntoSummon(summonIn, summonMode);
     return (
-        <div>
+        <div className={style.summonBlock}>
             <div className={style.summonName}>
-                {summon.name} ({summonMode.name}, at level {spellLevel})
+                {summon.name} ({summonMode.name})
             </div>
             <div className={style.typeLine}>
                 {toTitleCase(summon.size)} {summon.type}
             </div>
             <div className={style.sectionDivider}></div>
-            <div>
+            <div className={style.statList}>
                 <span className={style.statName}>Armor Class</span> {summon.baseAC + spellLevel} (natural armor)
             </div>
-            <div>
+            <div className={style.statList}>
                 <span className={style.statName}>Hit Points</span> {summon.hp.base + (spellLevel - summon.minSpellLevel) * summon.hp.perLevel}
             </div>
-            <div>
+            <div className={style.statList}>
                 <span className={style.statName}>Speed</span> {renderSpeed(summon.speed)}
             </div>
             <div className={style.sectionDivider}></div>
             <div>
-                <table>
+                <table className={style.abilityScoreTable}>
                     <thead>
                         <tr>
-                            <td>STR</td>
-                            <td>DEX</td>
-                            <td>CON</td>
-                            <td>INT</td>
-                            <td>WIS</td>
-                            <td>CHA</td>
+                            <th>STR</th>
+                            <th>DEX</th>
+                            <th>CON</th>
+                            <th>INT</th>
+                            <th>WIS</th>
+                            <th>CHA</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>{Object.values(summon.attributes).map((attribute, index) => renderAttributeMod(attribute, index))}</tr>
+                        <tr>{Object.values(summon.abilityScores).map((abilityScore, index) => renderAbilityScoreMod(abilityScore, index))}</tr>
                     </tbody>
                 </table>
             </div>
@@ -143,8 +145,8 @@ export const SummonBlock: React.FC<SummonBlockProps> = ({ summon: summonIn, summ
             {renderInfoList('Damage Resistances', summon.damageResistances)}
             {renderInfoList('Damage Immunities', summon.damageImmunities)}
             {renderInfoList('Condition Immunities', summon.conditionImmunities)}
-            <div>
-                <span className={style.statName}>Senses</span> darkvision {summon.darkvisionDistance || '60'} ft., passive Perception {10 + calcMod(summon.attributes.wis)}
+            <div className={style.statList}>
+                <span className={style.statName}>Senses</span> darkvision {summon.darkvisionDistance || '60'} ft., passive Perception {10 + calcMod(summon.abilityScores.wis)}
             </div>
             {renderInfoList('Languages', summon.languages)}
             {renderFeatureBlock('Traits', summon.traits, spellLevel, spellDC)}
@@ -158,7 +160,11 @@ export const SummonBlock: React.FC<SummonBlockProps> = ({ summon: summonIn, summ
             )}
             {(summon.attacks || []).map((attack, index) => (
                 <div key={'attack' + index}>
-                    <span className={style.featureName}>{attack.name}.</span> {toTitleCase(attack.type)} {toTitleCase(attack.weapon)} Attack: +{spellAttack} to hit, {attack.type === 'ranged' ? 'range' : 'reach'} {attack.range} ft., one {attack.target}. Hit:{' '}
+                    <span className={style.featureName}>{attack.name}.</span>{' '}
+                    <span className={style.attackType}>
+                        {toTitleCase(attack.type)} {toTitleCase(attack.weapon)} Attack
+                    </span>
+                    : +{spellAttack} to hit, {attack.type === 'ranged' ? 'range' : 'reach'} {attack.range} ft., one {attack.target}. <span className={style.hit}>Hit: </span>
                     {renderDmg(attack.damage, spellLevel)}
                     {typeof attack.additionalText === 'function' ? attack.additionalText(spellDC, spellLevel) : attack.additionalText}.
                 </div>

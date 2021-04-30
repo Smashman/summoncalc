@@ -16,8 +16,8 @@
 body {
     font-family: v.$open-sans;
     margin: 0;
-    background: black;
-    color: white;
+    background: v.$background-color;
+    color: v.$text-color;
     font-size: 16px;
 }
 
@@ -25,4 +25,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+header {
+    width: 100%;
+    background: v.$panel-color;
+    border-bottom: 0.4em solid v.$accent-color;
+    padding: 1em;
+    margin-bottom: 4em;
+    h1 {
+        font-family: v.$spectral-sc;
+        font-size: 2em;
+        color: v.$accent-color;
+        font-weight: normal;
+        margin: 0;
+        margin-bottom: 0.3em;
+    }
+    h2 {
+        font-size: 1.2em;
+        font-weight: normal;
+        font-style: italic;
+        margin: 0;
+        margin-bottom: 0.3em;
+    }
 }

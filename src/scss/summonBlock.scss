@@ -1,8 +1,21 @@
 @use 'variables' as v;
+@use 'sass:color';
+.summon-block {
+    max-width: 32em;
+    background: v.$panel-color;
+    padding: 1em;
+    padding-top: 0.5em;
+    box-shadow: 5px 5px 5px black;
+    $top-bottom-border: 0.4em solid v.$accent-color;
+    border-top: $top-bottom-border;
+    border-bottom: $top-bottom-border;
+    margin-bottom: 5em;
+}
 
 .summon-name {
     font-size: 1.8em;
     font-family: v.$spectral-sc;
+    color: v.$accent-color;
 }
 
 .type-line {
@@ -14,14 +27,33 @@
     font-weight: bold;
 }
 
-.section-divider {
-    border-bottom: 2px solid red;
-    margin: 0.3em 0;
-    @include v.alegreya-sans-sc-light;
-    font-size: 1.5em;
+.ability-score-table {
+    width: 100%;
+    text-align: center;
 }
 
-.stat-name {
-    font-weight: bold;
-    color: red;
+.section-divider {
+    @include v.alegreya-sans-sc-light;
+    border-bottom: 2px solid v.$accent-color;
+    margin: 0.3em 0;
+    font-size: 1.4em;
+}
+
+.stat-list {
+    color: color.scale(v.$text-color, $lightness: -15%);
+    text-indent: -1em;
+    padding-left: 1em;
+    .stat-name {
+        font-weight: bold;
+        color: v.$text-color;
+    }
+}
+
+.attack-type,
+.hit {
+    font-style: italic;
+}
+
+.damage-dice {
+    white-space: nowrap;
 }

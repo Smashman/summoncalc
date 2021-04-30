@@ -14,7 +14,7 @@ const aberrantSummon: Summon = {
         perLevel: 10,
     },
     speed: { walk: 30 },
-    attributes: {
+    abilityScores: {
         str: 16,
         dex: 10,
         con: 15,
@@ -122,7 +122,7 @@ const beastSummon: Summon = {
         perLevel: 5,
     },
     speed: { walk: 30 },
-    attributes: {
+    abilityScores: {
         str: 18,
         dex: 11,
         con: 16,
@@ -204,7 +204,7 @@ const celestialSummon: Summon = {
         perLevel: 10,
     },
     speed: { walk: 30, fly: { speed: 40 } },
-    attributes: {
+    abilityScores: {
         str: 16,
         dex: 14,
         con: 16,
@@ -283,7 +283,7 @@ const constructSummon: Summon = {
         perLevel: 15,
     },
     speed: { walk: 30 },
-    attributes: {
+    abilityScores: {
         str: 18,
         dex: 10,
         con: 18,
@@ -394,7 +394,7 @@ const elementalSummon: Summon = {
         perLevel: 10,
     },
     speed: { walk: 40 },
-    attributes: {
+    abilityScores: {
         str: 18,
         dex: 15,
         con: 17,
@@ -449,7 +449,7 @@ const feySummon: Summon = {
         perLevel: 10,
     },
     speed: { walk: 40 },
-    attributes: {
+    abilityScores: {
         str: 13,
         dex: 16,
         con: 14,
@@ -531,7 +531,7 @@ const fiendishSummon: Summon = {
         perLevel: 15,
     },
     speed: { walk: 40 },
-    attributes: {
+    abilityScores: {
         str: 13,
         dex: 16,
         con: 15,
@@ -651,7 +651,7 @@ const shadowSummon: Summon = {
         perLevel: 15,
     },
     speed: { walk: 40 },
-    attributes: {
+    abilityScores: {
         str: 13,
         dex: 16,
         con: 15,
@@ -733,7 +733,7 @@ const undeadSummon: Summon = {
         perLevel: 10,
     },
     speed: { walk: 30 },
-    attributes: {
+    abilityScores: {
         str: 12,
         dex: 16,
         con: 15,
