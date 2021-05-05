@@ -1,7 +1,7 @@
 @use 'variables' as v;
 @use 'sass:color';
 .summon-block {
-    max-width: 32em;
+    width: v.$content-width;
     background: v.$panel-color;
     padding: 1em;
     padding-top: 0.5em;
@@ -9,7 +9,6 @@
     $top-bottom-border: 0.4em solid v.$accent-color;
     border-top: $top-bottom-border;
     border-bottom: $top-bottom-border;
-    margin-bottom: 5em;
 }
 
 .summon-name {
@@ -40,13 +39,17 @@
 }
 
 .stat-list {
-    color: color.scale(v.$text-color, $lightness: -15%);
+    color: v.$dim-text;
     text-indent: -1em;
     padding-left: 1em;
     .stat-name {
         font-weight: bold;
         color: v.$text-color;
     }
+}
+
+.feature:not(:last-of-type) {
+    margin-bottom: 0.3em;
 }
 
 .attack-type,

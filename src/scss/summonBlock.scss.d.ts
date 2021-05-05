@@ -6,6 +6,7 @@ export const abilityScoreTable: string
 export const sectionDivider: string
 export const statList: string
 export const statName: string
+export const feature: string
 export const attackType: string
 export const hit: string
 export const damageDice: string
@@ -26,6 +27,7 @@ interface Namespace {
 	"stat-list": string,
 	"statName": string,
 	"stat-name": string,
+	"feature": string,
 	"attackType": string,
 	"attack-type": string,
 	"hit": string,

@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as v;
 @import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&family=Open+Sans:wght@400;700&family=Spectral+SC&display=swap');
 
@@ -16,22 +17,60 @@
 body {
     font-family: v.$open-sans;
     margin: 0;
-    background: v.$background-color;
+    background: v.$panel-color;
     color: v.$text-color;
     font-size: 16px;
 }
 
-.app {
+:global #noscript {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+
+    #noscript-main {
+        background-color: v.$background-color;
+        flex-grow: 1;
+        font-size: 1.5em;
+        display: flex;
+        justify-content: center;
+        padding: 5em;
+    }
 }
-header {
+
+a {
+    color: v.$text-color;
+    &:hover {
+        color: color.scale(v.$text-color, $lightness: -20%);
+    }
+}
+
+.app {
+    background-color: v.$background-color;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+    padding: 3em;
+    flex-grow: 1;
+}
+
+$header-footer-border: 0.4em solid v.$accent-color;
+
+header,
+footer {
     width: 100%;
     background: v.$panel-color;
-    border-bottom: 0.4em solid v.$accent-color;
     padding: 1em;
-    margin-bottom: 4em;
+    display: flex;
+}
+header {
+    border-bottom: $header-footer-border;
     h1 {
         font-family: v.$spectral-sc;
         font-size: 2em;
@@ -46,5 +85,34 @@ header {
         font-style: italic;
         margin: 0;
         margin-bottom: 0.3em;
+    }
+}
+footer {
+    border-top: $header-footer-border;
+    justify-content: space-between;
+    text-align: right;
+
+    #github-link {
+        svg {
+            height: 72px;
+            width: 72px;
+        }
+        & .github-logo {
+            fill: color.scale(v.$panel-color, $lightness: 10%);
+        }
+        &:hover .github-logo {
+            fill: color.scale(v.$panel-color, $lightness: 20%);
+        }
+    }
+
+    .credits {
+        & > div:not(:last-of-type) {
+            margin-bottom: 0.2em;
+        }
+        color: v.$dim-text;
+        .credit {
+            color: v.$text-color;
+            font-weight: bold;
+        }
     }
 }

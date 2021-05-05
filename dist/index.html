@@ -5,9 +5,23 @@
         <link href="bundle.css" rel="stylesheet" />
     </head>
     <body>
-        <div id="root"></div>
-        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+        <div id="root">
+            <noscript>
+                <div id="noscript">
+                    <header>
+                        <div>
+                            <h1>Summon Calculator</h1>
+                            <h2>Tiny construct, lawful helpful</h2>
+                        </div>
+                    </header>
+                    <main id="noscript-main">
+                        <div>This app requires JavaScript to work. Please <a href="https://www.enable-javascript.com/" target="_blank">enable JavaScript</a> to calculate your summons!</div>
+                    </main>
+                </div>
+            </noscript>
+        </div>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
         <script src="bundle.js"></script>
     </body>
 </html>

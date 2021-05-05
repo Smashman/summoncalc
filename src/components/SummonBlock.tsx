@@ -43,7 +43,7 @@ const renderSpeed = (speed: Speed) => {
 const renderContent = (title: string, spellLevel: SpellLevel, spellDC: number) => (feature: Content, index: number) => {
     const featureContent = typeof feature.content === 'function' ? feature.content(spellDC, spellLevel) : feature.content;
     return (
-        <div key={`${title}Feature${index}`}>
+        <div className={style.feature} key={`${title}Feature${index}`}>
             <span className={style.featureName}>{feature.name}.</span> {featureContent}
         </div>
     );
@@ -152,14 +152,14 @@ export const SummonBlock: React.FC<SummonBlockProps> = ({ summon: summonIn, summ
             {renderFeatureBlock('Traits', summon.traits, spellLevel, spellDC)}
             <div className={style.sectionDivider}>Actions</div>
             {spellLevel >= 4 ? (
-                <div>
+                <div className={style.feature}>
                     <span className={style.featureName}>Multiattack.</span> The {summon.shortName} makes {toWords(Math.floor(spellLevel / 2))} attacks.
                 </div>
             ) : (
                 <React.Fragment />
             )}
             {(summon.attacks || []).map((attack, index) => (
-                <div key={'attack' + index}>
+                <div className={style.feature} key={'attack' + index}>
                     <span className={style.featureName}>{attack.name}.</span>{' '}
                     <span className={style.attackType}>
                         {toTitleCase(attack.type)} {toTitleCase(attack.weapon)} Attack

@@ -1,56 +1,9 @@
 @use 'variables' as v;
 
-input,
-select {
-    font-size: inherit;
-    font-family: inherit;
-    color: inherit;
-    background-color: inherit;
-    border: #{(1/16)}em solid v.$accent-color;
-    border-radius: #{(4/16)}em;
-    padding: #{(4/16)}em;
-}
-
-.input-with-formatting {
-    position: relative;
-}
-
-@mixin input-with-formatting-text {
-    position: absolute;
-    pointer-events: none;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-#spell-attack-wrapper {
-    &:before {
-        content: '+';
-        left: 0.4em;
-        @include input-with-formatting-text();
-    }
-    input {
-        padding-left: 1em;
-    }
-}
-
-#spell-level-wrapper {
-    span {
-        right: 0.4em;
-        @include input-with-formatting-text();
-    }
-    input {
-        padding-right: 1em;
-    }
-}
-
-input[type='number']::-webkit-inner-spin-button {
-    opacity: 1;
-}
-
 .options {
     background-color: v.$panel-color;
-    min-width: 32em;
     padding: 1em;
+    margin-bottom: 3em;
 
     .options-title {
         @include v.alegreya-sans-sc-light;

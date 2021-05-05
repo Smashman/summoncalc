@@ -18,3 +18,7 @@ export const toTitleCase = (string: string) =>
         .join(' ');
 
 export const sortByName = <T extends { name: string }[]>(contents: T) => [...contents].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+
+export const spellAttackId = 'spell-attack';
+export const spellDCId = 'spell-dc';
+export const spellLevelId = 'spell-level';

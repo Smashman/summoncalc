@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { maxSpellAttack, maxSpellLevel, maxSpellDC, minSpellAttack, minSpellDC, toTitleCase } from '../utils';
 import style from '../scss/options.scss';
+import { maxSpellAttack, maxSpellLevel, maxSpellDC, minSpellAttack, minSpellDC, toTitleCase, spellAttackId, spellLevelId, spellDCId } from '../utils';
 import { allSummons } from '../data';
+import { NumberInput } from './NumberInput';
 
 export interface OptionsProps {
     spellAttack: number;
@@ -26,7 +27,7 @@ export const Options: React.FC<OptionsProps> = ({ spellAttack, spellDC, spellLev
         setSpellLevel(selectedSummon.minSpellLevel);
         localStorage.setItem('summon', selectedSummon.name);
         localStorage.setItem('mode', firstMode.name);
-        localStorage.setItem('spellLevel', selectedSummon.minSpellLevel.toString());
+        localStorage.setItem(spellLevelId, selectedSummon.minSpellLevel.toString());
     };
 
     const handleModeChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -35,40 +36,26 @@ export const Options: React.FC<OptionsProps> = ({ spellAttack, spellDC, spellLev
         localStorage.setItem('mode', selectedMode.name);
     };
 
-    const numberInputConstrainer = (min: number, max: number, setter: React.Dispatch<React.SetStateAction<number>>, storageKey: string): React.ChangeEventHandler<HTMLInputElement> => (e) => {
-        let number = Number(e.target.value);
-        if (isNaN(number) || number < min) {
-            number = min;
-        } else if (number > max) {
-            number = max;
-        }
-        setter(number);
-        localStorage.setItem(storageKey, number.toString());
-    };
-
-    const getSpellLevelSuffix = (spellLevel: number) => {
+    const spellLevelFormatter = (spellLevel: number) => {
         switch (spellLevel) {
             case 2:
-                return 'nd';
+                return `${spellLevel}nd`;
             case 3:
-                return 'rd';
+                return `${spellLevel}rd`;
             default:
-                return 'th';
+                return `${spellLevel}th`;
         }
     };
     return (
         <div className={style.options}>
-            <div className={style.optionsTitle}>Options</div>
             <div className={style.optionRow}>
                 <div>
-                    <label htmlFor="spell-attack">Spell Attack Modifier: </label>
-                    <span id={style.spellAttackWrapper} className={style.inputWithFormatting}>
-                        <input id="spell-attack" type="number" min={minSpellAttack} max={maxSpellAttack} value={spellAttack} onChange={numberInputConstrainer(minSpellAttack, maxSpellAttack, setSpellAttack, 'spellAttack')} />
-                    </span>
+                    <label htmlFor={spellAttackId}>Spell Attack Modifier: </label>
+                    <NumberInput inputId={spellAttackId} min={minSpellAttack} max={maxSpellAttack} value={spellAttack} size={3} setter={setSpellAttack} formatter={(num) => `+${num}`} disabled />
                 </div>
                 <div>
-                    <label htmlFor="spell-dc">Spell Save DC: </label>
-                    <input id="spell-dc" type="number" min={minSpellDC} max={maxSpellDC} value={spellDC} onChange={numberInputConstrainer(minSpellDC, maxSpellDC, setSpellDC, 'spellDC')} />
+                    <label htmlFor={spellDCId}>Spell Save DC: </label>
+                    <NumberInput inputId={spellDCId} min={minSpellDC} max={maxSpellDC} value={spellDC} setter={setSpellDC} disabled />
                 </div>
             </div>
             <div className={style.optionRow}>
@@ -95,11 +82,8 @@ export const Options: React.FC<OptionsProps> = ({ spellAttack, spellDC, spellLev
             </div>
             <div className={style.optionRow}>
                 <div>
-                    <label htmlFor="spell-level">Spell Level: </label>
-                    <span id={style.spellLevelWrapper} className={style.inputWithFormatting}>
-                        <input id="spell-level" type="number" min={summon.minSpellLevel} max={maxSpellLevel} value={spellLevel} onChange={numberInputConstrainer(summon.minSpellLevel, maxSpellLevel, setSpellLevel, 'spellLevel')} />
-                        <span>{getSpellLevelSuffix(spellLevel)}</span>
-                    </span>
+                    <label htmlFor={spellLevelId}>Spell Level: </label>
+                    <NumberInput inputId={spellLevelId} min={summon.minSpellLevel} max={maxSpellLevel} value={spellLevel} setter={setSpellLevel} formatter={spellLevelFormatter} size={3} disabled />
                 </div>
             </div>
         </div>
