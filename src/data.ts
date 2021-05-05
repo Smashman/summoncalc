@@ -218,7 +218,7 @@ const celestialSummon: Summon = {
     actions: [
         {
             name: 'Healing Touch (1/Day)',
-            content: (_, spellLevel) => `The celestial touches another creature. The target magically regains hit points equal to 2d8 + ${spellLevel}.`,
+            content: (_, spellLevel) => `The celestial touches another creature. The target magically regains 2d8 + ${spellLevel} hit points.`,
         },
     ],
     modes: [
