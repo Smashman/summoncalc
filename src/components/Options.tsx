@@ -64,7 +64,7 @@ export const Options: React.FC<OptionsProps> = ({ spellAttack, spellDC, spellLev
                     <select id="summon-select" value={summon.type} onChange={handleSummonChange}>
                         {allSummons.map((summon, index) => (
                             <option value={summon.type} key={'summon' + index}>
-                                {toTitleCase(summon.type)}
+                                {toTitleCase(summon.spellName ?? summon.type)}
                             </option>
                         ))}
                     </select>

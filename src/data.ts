@@ -642,6 +642,7 @@ const fiendishSummon: Summon = {
 const shadowSummon: Summon = {
     name: 'Shadow Spirit',
     shortName: 'spirit',
+    spellName: 'shadowspawn',
     minSpellLevel: 3,
     size: 'medium',
     type: 'monstrosity',

@@ -66,6 +66,7 @@ interface SummonMode extends Partial<Omit<Summon, 'name' | 'hp' | 'speed'>> {
 interface Summon {
     name: string;
     shortName: string;
+    spellName?: string;
     minSpellLevel: SpellLevel;
     size: Size;
     type: CreatureType;
