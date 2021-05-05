@@ -6,7 +6,9 @@ import style from '../scss/summonBlock.scss';
 const renderAbilityScoreMod = (score: number, index: number) => {
     return (
         <td key={'abilityScore' + index}>
-            {score} ({calcMod(score) >= 0 ? '+' + calcMod(score) : calcMod(score)})
+            <span className={style.abilityScore}>
+                {score} ({calcMod(score) >= 0 ? '+' + calcMod(score) : calcMod(score)})
+            </span>
         </td>
     );
 };
@@ -67,7 +69,7 @@ const renderDmg = (damage: Damage[], spellLevel: SpellLevel) => (
         {damage.map((dmg, index) => (
             <React.Fragment key={'damage' + index}>
                 {index >= 1 ? ' + ' : ''}
-                <span className={style.damageDice}>
+                <span>
                     {dmg.dice.number}d{dmg.dice.size}
                     {dmg.modifier ? ' + ' + (dmg.modifier + spellLevel) : ''} {dmg.type} damage
                 </span>

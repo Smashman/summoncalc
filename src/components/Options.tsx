@@ -25,7 +25,7 @@ export const Options: React.FC<OptionsProps> = ({ spellAttack, spellDC, spellLev
         setSummon(selectedSummon);
         setSummonMode(firstMode);
         setSpellLevel(selectedSummon.minSpellLevel);
-        localStorage.setItem('summon', selectedSummon.name);
+        localStorage.setItem('summon', selectedSummon.type);
         localStorage.setItem('mode', firstMode.name);
         localStorage.setItem(spellLevelId, selectedSummon.minSpellLevel.toString());
     };
@@ -61,10 +61,10 @@ export const Options: React.FC<OptionsProps> = ({ spellAttack, spellDC, spellLev
             <div className={style.optionRow}>
                 <div>
                     <label htmlFor="summon-select">Summon: </label>
-                    <select id="summon-select" value={summon.name} onChange={handleSummonChange}>
+                    <select id="summon-select" value={summon.type} onChange={handleSummonChange}>
                         {allSummons.map((summon, index) => (
-                            <option value={summon.name} key={'summon' + index}>
-                                {summon.name}
+                            <option value={summon.type} key={'summon' + index}>
+                                {toTitleCase(summon.type)}
                             </option>
                         ))}
                     </select>

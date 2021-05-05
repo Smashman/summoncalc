@@ -63,6 +63,7 @@ button {
 }
 
 .number-input {
+    white-space: nowrap;
     button:first-of-type {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;

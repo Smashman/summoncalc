@@ -45,9 +45,9 @@ a {
 }
 
 .app {
+    display: flex;
     background-color: v.$background-color;
     min-height: 100%;
-    display: flex;
     flex-direction: column;
 }
 
@@ -56,8 +56,9 @@ a {
     flex-direction: column;
     margin: 0 auto;
     align-items: center;
-    padding: 3em;
+    padding: 3em 1em;
     flex-grow: 1;
+    gap: 3em;
 }
 
 $header-footer-border: 0.4em solid v.$accent-color;
@@ -68,6 +69,7 @@ footer {
     background: v.$panel-color;
     padding: 1em;
     display: flex;
+    justify-content: space-between;
 }
 header {
     border-bottom: $header-footer-border;
@@ -84,12 +86,24 @@ header {
         font-weight: normal;
         font-style: italic;
         margin: 0;
-        margin-bottom: 0.3em;
+    }
+    .info {
+        text-align: right;
+        color: v.$dim-text;
+        max-width: 40%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2em;
+        justify-content: center;
+
+        .info-tag-line {
+            color: v.$text-color;
+            font-size: 1.1em;
+        }
     }
 }
 footer {
     border-top: $header-footer-border;
-    justify-content: space-between;
     text-align: right;
 
     #github-link {
@@ -114,5 +128,23 @@ footer {
             color: v.$text-color;
             font-weight: bold;
         }
+    }
+}
+
+@media screen and (max-width: 34em) {
+    header,
+    footer {
+        text-align: center;
+        gap: 1em;
+    }
+    header {
+        flex-direction: column;
+        .info {
+            text-align: center;
+            max-width: 100%;
+        }
+    }
+    footer {
+        flex-direction: column-reverse;
     }
 }

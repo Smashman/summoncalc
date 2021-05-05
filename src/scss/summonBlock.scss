@@ -1,7 +1,7 @@
 @use 'variables' as v;
 @use 'sass:color';
 .summon-block {
-    width: v.$content-width;
+    max-width: v.$content-width;
     background: v.$panel-color;
     padding: 1em;
     padding-top: 0.5em;
@@ -29,6 +29,10 @@
 .ability-score-table {
     width: 100%;
     text-align: center;
+
+    .ability-score {
+        width: calc(100% / 6);
+    }
 }
 
 .section-divider {
@@ -55,8 +59,4 @@
 .attack-type,
 .hit {
     font-style: italic;
-}
-
-.damage-dice {
-    white-space: nowrap;
 }

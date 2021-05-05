@@ -2,5 +2,9 @@ node_modules
 
 dist/*
 !dist/index.html
+!dist/favicon*
+!dist/site.webmanifest
+!dist/android-chrome*.png
+!dist/apple-touch-icon.png
 src/img/**/*.png
 coverage/
