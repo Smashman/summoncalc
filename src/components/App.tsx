@@ -67,7 +67,7 @@ export const App: React.FC = () => {
                     <h2>Tiny construct, lawful helpful</h2>
                 </div>
                 <div className={style.info}>
-                    <div className={style.infoTagLine}>The Summon spells in Tasha's Guide to Everything are complicated. Let's make them easier to use.</div>
+                    <div className={style.infoTagLine}>The Summon spells in Tasha's Cauldron of Everything are complicated. Let's make them easier to use.</div>
                     Input your character's spell attack modifier and spell save DC, then choose the type and form of the summon. Next, decide the level of the spell slot that you're expending and a fully formed stat block with all the features for your summon will
                     materialise! <br /> Everything is remembered for your next visit.
                 </div>
@@ -91,7 +91,7 @@ export const App: React.FC = () => {
                 </a>
                 <div className={style.credits}>
                     <div>
-                        <span className={style.credit}>Stats from</span> <i>Tasha's Guide to Everything</i> pg. 109 &ndash; 114
+                        <span className={style.credit}>Stats from</span> <i>Tasha's Cauldron of Everything</i> pg. 109 &ndash; 114
                     </div>
                     <div>
                         <span className={style.credit}>Site developed by</span> Ben 'Smashman' Williams
