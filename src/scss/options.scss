@@ -7,13 +7,6 @@
     flex-direction: column;
     gap: 0.3em;
 
-    .options-title {
-        @include v.alegreya-sans-sc-light;
-        border-bottom: 2px solid v.$accent-color;
-        margin-bottom: 0.3em;
-        font-size: 1.4em;
-    }
-
     .option-row {
         display: flex;
         flex-direction: row;

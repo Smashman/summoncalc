@@ -14,12 +14,14 @@
     height: 100%;
 }
 
+$em-size: 16;
+
 body {
     font-family: v.$open-sans;
     margin: 0;
     background: v.$panel-color;
     color: v.$text-color;
-    font-size: 16px;
+    font-size: #{$em-size}px;
 }
 
 :global #noscript {
@@ -59,6 +61,46 @@ a {
     padding: 3em 1em;
     flex-grow: 1;
     gap: 3em;
+}
+
+input,
+select,
+button {
+    font-size: inherit;
+    font-family: inherit;
+    color: v.$text-color;
+    background-color: v.$background-color;
+    border: #{(1 / $em-size)}em solid v.$accent-color;
+    border-radius: #{(4 / $em-size)}em;
+    padding: #{(4 / $em-size)}em;
+}
+
+input[type='checkbox'] {
+    $border-size: 1 / $em-size;
+    $padding-size: 1 / $em-size;
+
+    appearance: none;
+    height: 1em;
+    width: 1em;
+    border: #{$border-size}em solid v.$accent-color;
+    margin: 0;
+    margin-left: #{4 / $em-size}em;
+    position: relative;
+    padding: 0;
+
+    &:checked:after {
+        content: ' ';
+        position: absolute;
+        $checkbox-width: 1 - (2 * $border-size) - (2 * $padding-size);
+        width: #{$checkbox-width}em;
+        height: #{$checkbox-width/2}em;
+        border: v.$accent-color solid #{$border-size * 2}em;
+        border-top: 0;
+        border-right: 0;
+        transform: rotate(-45deg);
+        top: #{$padding-size + $border-size}em;
+        left: #{$padding-size}em;
+    }
 }
 
 $header-footer-border: 0.4em solid v.$accent-color;
@@ -120,10 +162,12 @@ footer {
     }
 
     .credits {
-        & > div:not(:last-of-type) {
-            margin-bottom: 0.2em;
-        }
         color: v.$dim-text;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.2em;
+
         .credit {
             color: v.$text-color;
             font-weight: bold;

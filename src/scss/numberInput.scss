@@ -1,50 +1,6 @@
 @use 'variables' as v;
 @use 'sass:color';
 
-input,
-select,
-button {
-    font-size: inherit;
-    font-family: inherit;
-    color: v.$text-color;
-    background-color: v.$background-color;
-    border: #{(1/16)}em solid v.$accent-color;
-    border-radius: #{(4/16)}em;
-    padding: #{(4/16)}em;
-}
-
-.input-with-formatting {
-    position: relative;
-}
-
-@mixin input-with-formatting-text {
-    position: absolute;
-    pointer-events: none;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-#spell-attack-wrapper {
-    &:before {
-        content: '+';
-        left: 0.4em;
-        @include input-with-formatting-text();
-    }
-    input {
-        padding-left: 1em;
-    }
-}
-
-#spell-level-wrapper {
-    span {
-        right: 0.4em;
-        @include input-with-formatting-text();
-    }
-    input {
-        padding-right: 1em;
-    }
-}
-
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
     display: none;
@@ -52,7 +8,8 @@ input[type='number']::-webkit-inner-spin-button {
     margin: 0;
 }
 
-input {
+input[type='number'],
+input[type='text'] {
     appearance: textfield;
     border-radius: 0;
     text-align: center;

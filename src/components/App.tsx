@@ -1,14 +1,17 @@
 import * as React from 'react';
 import * as style from '../scss/style.scss';
-import { allSummons } from '../data';
+import { defaultSummons, uaSummons } from '../data';
 import { SummonBlock, SummonBlockProps } from './SummonBlock';
 import { Options, OptionsProps } from './Options';
-import { spellAttackId, spellDCId, spellLevelId } from '../utils';
+import { enableUAKey, spellAttackId, spellDCId, spellLevelId, summonKey, summonModeKey } from '../utils';
 
 export const App: React.FC = () => {
+    const [enableUA, setEnableUA] = React.useState(false);
+    let summons = !enableUA ? [...defaultSummons] : [...defaultSummons, ...uaSummons];
+
     const [spellAttack, setSpellAttack] = React.useState(5);
     const [spellDC, setSpellDC] = React.useState(13);
-    const [summon, setSummon] = React.useState(allSummons[0]);
+    const [summon, setSummon] = React.useState(summons[0]);
     const [summonMode, setSummonMode] = React.useState(summon.modes[0]);
     const [spellLevel, setSpellLevel] = React.useState(summon.minSpellLevel);
 
@@ -20,25 +23,55 @@ export const App: React.FC = () => {
         }
     };
 
+    const resetSummonState = () => {
+        const selectedSummon = summons[0];
+        const firstMode = selectedSummon.modes[0];
+        setSummon(selectedSummon);
+        setSummonMode(firstMode);
+        setSpellLevel(selectedSummon.minSpellLevel);
+        localStorage.setItem(summonKey, selectedSummon.id);
+        localStorage.setItem(summonModeKey, firstMode.name.toLowerCase());
+        localStorage.setItem(spellLevelId, selectedSummon.minSpellLevel.toString());
+    };
+
     React.useLayoutEffect(() => {
         loadNumberFromStorage(spellAttackId, setSpellAttack);
         loadNumberFromStorage(spellDCId, setSpellDC);
         loadNumberFromStorage(spellLevelId, setSpellLevel);
 
-        const storedSummonName = localStorage.getItem('summon');
-        const selectedSummon = allSummons.find((summon) => summon.type === storedSummonName);
+        const storedEnableUA = localStorage.getItem(enableUAKey) === 'true';
+        setEnableUA(storedEnableUA);
+
+        summons = !storedEnableUA ? [...defaultSummons] : [...defaultSummons, ...uaSummons];
+
+        const storedSummonId = localStorage.getItem(summonKey);
+        const selectedSummon = summons.find((summon) => summon.id === storedSummonId);
         if (selectedSummon) {
             setSummon(selectedSummon);
 
-            const storedModeName = localStorage.getItem('mode');
-            const selectedMode = selectedSummon.modes.find((mode) => mode.name === storedModeName);
+            const storedModeName = localStorage.getItem(summonModeKey);
+            const selectedMode = selectedSummon.modes.find((mode) => mode.name.toLowerCase() === storedModeName?.toLowerCase());
             if (selectedMode) {
                 setSummonMode(selectedMode);
+            } else {
+                resetSummonState();
             }
+        } else {
+            resetSummonState();
         }
     }, []);
 
+    const changeEnableUA: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        const checked = e.target.checked;
+        setEnableUA(checked);
+        localStorage.setItem(enableUAKey, checked.toString());
+        if (!checked && summon.isUA) {
+            resetSummonState();
+        }
+    };
+
     const optionsProps: OptionsProps = {
+        summons,
         spellAttack,
         spellDC,
         spellLevel,
@@ -91,13 +124,16 @@ export const App: React.FC = () => {
                 </a>
                 <div className={style.credits}>
                     <div>
-                        <span className={style.credit}>Stats from</span> <i>Tasha's Cauldron of Everything</i> pg. 109 &ndash; 114
-                    </div>
-                    <div>
                         <span className={style.credit}>Site developed by</span> Ben 'Smashman' Williams
                     </div>
                     <div>
                         <span className={style.credit}>D&D by</span> Wizards of the Coast
+                    </div>
+                    <div>
+                        <label className={style.credit}>
+                            Enable UA
+                            <input type="checkbox" checked={enableUA} onChange={changeEnableUA} />
+                        </label>
                     </div>
                 </div>
             </footer>

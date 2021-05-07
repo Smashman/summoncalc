@@ -1,11 +1,14 @@
+import { toWords } from 'number-to-words';
 import { sortByName } from './utils';
 
 const understandsLanguages = 'understands the languages you speak';
 
 const aberrantSummon: Summon = {
+    id: 'aberration',
     name: 'Aberrant Spirit',
     shortName: 'aberration',
     minSpellLevel: 4,
+    page: 109,
     size: 'medium',
     type: 'abberation',
     baseAC: 11,
@@ -111,9 +114,11 @@ const aberrantSummon: Summon = {
 };
 
 const beastSummon: Summon = {
+    id: 'beast',
     name: 'Bestial Spirit',
     shortName: 'beast',
     minSpellLevel: 2,
+    page: 109,
     size: 'small',
     type: 'beast',
     baseAC: 11,
@@ -193,9 +198,11 @@ const beastSummon: Summon = {
 };
 
 const celestialSummon: Summon = {
+    id: 'celestial',
     name: 'Celestial Spirit',
     shortName: 'celestial',
     minSpellLevel: 5,
+    page: 110,
     size: 'large',
     type: 'celestial',
     baseAC: 11,
@@ -272,9 +279,11 @@ const celestialSummon: Summon = {
 };
 
 const constructSummon: Summon = {
+    id: 'construct',
     name: 'Construct Spirit',
     shortName: 'construct',
     minSpellLevel: 4,
+    page: 111,
     size: 'medium',
     type: 'construct',
     baseAC: 13,
@@ -382,9 +391,11 @@ const amorphousForm: Content = {
     content: 'The elemental can move through a space as narrow as 1 inch wide without squeezing.',
 };
 const elementalSummon: Summon = {
+    id: 'elemental',
     name: 'Elemental Spirit',
     shortName: 'elemental',
     minSpellLevel: 4,
+    page: 111,
     size: 'medium',
     type: 'elemental',
     modeName: 'element',
@@ -438,9 +449,11 @@ const elementalSummon: Summon = {
 const feyStepName = 'Fey Step';
 const feyStepContentHead = 'The fey magically teleports up to 30 feet to an unoccupied space it can see.';
 const feySummon: Summon = {
+    id: 'fey',
     name: 'Fey Spirit',
     shortName: 'fey',
     minSpellLevel: 3,
+    page: 112,
     size: 'small',
     type: 'fey',
     baseAC: 12,
@@ -520,9 +533,11 @@ const feySummon: Summon = {
 };
 
 const fiendishSummon: Summon = {
+    id: 'fiend',
     name: 'Fiendish Spirit',
     shortName: 'fiend',
     minSpellLevel: 6,
+    page: 112,
     size: 'large',
     type: 'fiend',
     baseAC: 12,
@@ -640,10 +655,12 @@ const fiendishSummon: Summon = {
 };
 
 const shadowSummon: Summon = {
+    id: 'monstrosity',
     name: 'Shadow Spirit',
     shortName: 'spirit',
     spellName: 'shadowspawn',
     minSpellLevel: 3,
+    page: 114,
     size: 'medium',
     type: 'monstrosity',
     baseAC: 11,
@@ -662,7 +679,7 @@ const shadowSummon: Summon = {
     },
     damageResistances: ['necrotic'],
     conditionImmunities: ['frightened'],
-    darkvisionDistance: 120,
+    darkvision: 120,
     languages: [understandsLanguages],
     attacks: [
         {
@@ -723,9 +740,11 @@ const shadowSummon: Summon = {
 };
 
 const undeadSummon: Summon = {
+    id: 'undead',
     name: 'Undead Spirit',
     shortName: 'spirit',
     minSpellLevel: 3,
+    page: 114,
     size: 'medium',
     type: 'undead',
     baseAC: 11,
@@ -831,4 +850,78 @@ const undeadSummon: Summon = {
     ],
 };
 
-export const allSummons: Summon[] = sortByName([aberrantSummon, beastSummon, celestialSummon, constructSummon, elementalSummon, feySummon, fiendishSummon, shadowSummon, undeadSummon]);
+const dragonSummon: Summon = {
+    id: 'dragon-ua',
+    name: 'Draconic Spirit',
+    shortName: 'dragon',
+    spellName: 'Draconic',
+    minSpellLevel: 5,
+    page: 7,
+    size: 'large',
+    type: 'dragon',
+    baseAC: 14,
+    hp: {
+        base: 50,
+        perLevel: 10,
+    },
+    speed: {
+        walk: 30,
+        fly: { speed: 80 },
+        swim: 30,
+    },
+    abilityScores: {
+        str: 19,
+        dex: 14,
+        con: 17,
+        int: 10,
+        wis: 14,
+        cha: 14,
+    },
+    conditionImmunities: ['charmed', 'frightened', 'poisoned'],
+    blindsight: 30,
+    languages: ['Draconic', understandsLanguages],
+    traits: [
+        {
+            name: 'Shared Resistances',
+            content: 'When you summon the dragon, choose one of its damage resistances. You have resistance to the chosen damage type until the spell ends.',
+        },
+    ],
+    multiattack: (_, spellLevel) => `The dragon uses its Breath Weapon, and makes ${toWords(Math.floor(spellLevel / 2))} Bite and Claw attacks.`,
+    attacks: [
+        {
+            name: 'Bite and Claw',
+            type: 'melee',
+            weapon: 'weapon',
+            range: 10,
+            target: 'target',
+            damage: [
+                {
+                    dice: {
+                        number: 1,
+                        size: '6',
+                    },
+                    modifier: 4,
+                    type: 'piercing',
+                },
+            ],
+        },
+    ],
+    actions: [
+        {
+            name: 'Breath Weapon',
+            content:
+                'The dragon exhales a stream of multicolored energy in a 30-foot cone. Each creature in that area must make a Dexterity saving throw, taking 2d6 damage of your choice of a damage type this dragon has resistance to on a failed save, or half as much damage on a successful one.',
+        },
+    ],
+    modes: [
+        { name: 'Chromatic', damageResistances: ['acid', 'cold', 'fire', 'lightning', 'poison'] },
+        { name: 'Gem', damageResistances: ['force', 'necrotic', 'psychic', 'radiant', 'thunder'] },
+        { name: 'Metallic', damageResistances: ['acid', 'cold', 'fire', 'lightning', 'poison'] },
+    ],
+    modeName: 'Family',
+    sourceName: 'Unearthed Arcana 2021: Draconic Options',
+    isUA: true,
+};
+
+export const defaultSummons: Summon[] = sortByName([aberrantSummon, beastSummon, celestialSummon, constructSummon, elementalSummon, feySummon, fiendishSummon, shadowSummon, undeadSummon]);
+export const uaSummons: Summon[] = sortByName([dragonSummon]);

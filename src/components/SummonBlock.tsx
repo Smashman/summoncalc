@@ -148,14 +148,14 @@ export const SummonBlock: React.FC<SummonBlockProps> = ({ summon: summonIn, summ
             {renderInfoList('Damage Immunities', summon.damageImmunities)}
             {renderInfoList('Condition Immunities', summon.conditionImmunities)}
             <div className={style.statList}>
-                <span className={style.statName}>Senses</span> darkvision {summon.darkvisionDistance || '60'} ft., passive Perception {10 + calcMod(summon.abilityScores.wis)}
+                <span className={style.statName}>Senses</span> {summon.blindsight ? `blindsight ${summon.blindsight} ft.,` : ''} darkvision {summon.darkvision || '60'} ft., passive Perception {10 + calcMod(summon.abilityScores.wis)}
             </div>
             {renderInfoList('Languages', summon.languages)}
             {renderFeatureBlock('Traits', summon.traits, spellLevel, spellDC)}
             <div className={style.sectionDivider}>Actions</div>
             {spellLevel >= 4 ? (
                 <div className={style.feature}>
-                    <span className={style.featureName}>Multiattack.</span> The {summon.shortName} makes {toWords(Math.floor(spellLevel / 2))} attacks.
+                    <span className={style.featureName}>Multiattack.</span> {summon.multiattack ? summon.multiattack(spellDC, spellLevel) : `The ${summon.shortName} makes ${toWords(Math.floor(spellLevel / 2))} attacks.`}
                 </div>
             ) : (
                 <React.Fragment />
@@ -174,6 +174,9 @@ export const SummonBlock: React.FC<SummonBlockProps> = ({ summon: summonIn, summ
             {(summon.actions || []).map(renderContent('actions', spellLevel, spellDC))}
             {renderFeatureBlock('Bonus Actions', summon.bonusActions, spellLevel, spellDC)}
             {renderFeatureBlock('Reactions', summon.reactions, spellLevel, spellDC)}
+            <div className={style.source}>
+                Source: <i>{summon.sourceName ?? "Tasha's Cauldron of Everything"}</i> pg. {summon.page}
+            </div>
         </div>
     );
 };

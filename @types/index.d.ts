@@ -1,5 +1,5 @@
 type Size = 'tiny' | 'small' | 'medium' | 'large' | 'huge' | 'gargantuan';
-type CreatureType = 'abberation' | 'beast' | 'celestial' | 'construct' | 'elemental' | 'fey' | 'fiend' | 'monstrosity' | 'undead';
+type CreatureType = 'abberation' | 'beast' | 'celestial' | 'construct' | 'dragon' | 'elemental' | 'fey' | 'fiend' | 'monstrosity' | 'undead';
 
 type SpeedTypes = keyof Speed;
 
@@ -64,10 +64,12 @@ interface SummonMode extends Partial<Omit<Summon, 'name' | 'hp' | 'speed'>> {
 }
 
 interface Summon {
+    id: string;
     name: string;
     shortName: string;
     spellName?: string;
     minSpellLevel: SpellLevel;
+    page: number;
     size: Size;
     type: CreatureType;
     baseAC: number;
@@ -77,15 +79,19 @@ interface Summon {
     damageResistances?: DamageType[];
     damageImmunities?: DamageType[];
     conditionImmunities?: Condition[];
-    darkvisionDistance?: number;
+    darkvision?: number;
+    blindsight?: number;
     languages: string[];
     traits?: Content[];
+    multiattack?: ContentFunc;
+    attacks?: Attack[];
     actions?: Content[];
     bonusActions?: Content[];
     reactions?: Content[];
-    attacks?: Attack[];
     modes: SummonMode[];
     modeName?: string;
+    sourceName?: string;
+    isUA?: boolean;
 }
 
 // type CharLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;

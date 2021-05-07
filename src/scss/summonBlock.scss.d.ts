@@ -10,6 +10,7 @@ export const statName: string
 export const feature: string
 export const attackType: string
 export const hit: string
+export const source: string
 interface Namespace {
 	"summonBlock": string,
 	"summon-block": string,
@@ -33,6 +34,7 @@ interface Namespace {
 	"attackType": string,
 	"attack-type": string,
 	"hit": string,
+	"source": string,
 }
 declare const summonBlockScss: Namespace
 export default summonBlockScss

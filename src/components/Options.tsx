@@ -1,10 +1,11 @@
 import * as React from 'react';
 import style from '../scss/options.scss';
-import { maxSpellAttack, maxSpellLevel, maxSpellDC, minSpellAttack, minSpellDC, toTitleCase, spellAttackId, spellLevelId, spellDCId } from '../utils';
-import { allSummons } from '../data';
+import { maxSpellAttack, maxSpellLevel, maxSpellDC, minSpellAttack, minSpellDC, toTitleCase, spellAttackId, spellLevelId, spellDCId, summonKey, summonModeKey } from '../utils';
 import { NumberInput } from './NumberInput';
 
 export interface OptionsProps {
+    summons: Summon[];
+
     spellAttack: number;
     spellDC: number;
     spellLevel: number;
@@ -18,22 +19,22 @@ export interface OptionsProps {
     setSummonMode: React.Dispatch<React.SetStateAction<SummonMode>>;
 }
 
-export const Options: React.FC<OptionsProps> = ({ spellAttack, spellDC, spellLevel, summon, summonMode, setSpellAttack, setSpellDC, setSpellLevel, setSummon, setSummonMode }) => {
+export const Options: React.FC<OptionsProps> = ({ summons, spellAttack, spellDC, spellLevel, summon, summonMode, setSpellAttack, setSpellDC, setSpellLevel, setSummon, setSummonMode }) => {
     const handleSummonChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-        const selectedSummon = allSummons[e.target.selectedIndex];
+        const selectedSummon = summons[e.target.selectedIndex];
         const firstMode = selectedSummon.modes[0];
         setSummon(selectedSummon);
         setSummonMode(firstMode);
         setSpellLevel(selectedSummon.minSpellLevel);
-        localStorage.setItem('summon', selectedSummon.type);
-        localStorage.setItem('mode', firstMode.name);
+        localStorage.setItem(summonKey, selectedSummon.id);
+        localStorage.setItem(summonModeKey, firstMode.name.toLowerCase());
         localStorage.setItem(spellLevelId, selectedSummon.minSpellLevel.toString());
     };
 
     const handleModeChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
         const selectedMode = summon.modes[e.target.selectedIndex];
         setSummonMode(selectedMode);
-        localStorage.setItem('mode', selectedMode.name);
+        localStorage.setItem(summonModeKey, selectedMode.name.toLowerCase());
     };
 
     const spellLevelFormatter = (spellLevel: number) => {
@@ -61,10 +62,10 @@ export const Options: React.FC<OptionsProps> = ({ spellAttack, spellDC, spellLev
             <div className={style.optionRow}>
                 <div>
                     <label htmlFor="summon-select">Summon: </label>
-                    <select id="summon-select" value={summon.type} onChange={handleSummonChange}>
-                        {allSummons.map((summon, index) => (
-                            <option value={summon.type} key={'summon' + index}>
-                                {toTitleCase(summon.spellName ?? summon.type)}
+                    <select id="summon-select" value={summon.id} onChange={handleSummonChange}>
+                        {summons.map((summon, index) => (
+                            <option value={summon.id} key={'summon' + index}>
+                                {toTitleCase(summon.spellName ?? summon.id)} {summon.isUA ? '(UA)' : ''}
                             </option>
                         ))}
                     </select>

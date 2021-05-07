@@ -22,3 +22,7 @@ export const sortByName = <T extends { name: string }[]>(contents: T) => [...con
 export const spellAttackId = 'spell-attack';
 export const spellDCId = 'spell-dc';
 export const spellLevelId = 'spell-level';
+
+export const summonKey = 'summon';
+export const summonModeKey = 'mode';
+export const enableUAKey = 'enableUA';
