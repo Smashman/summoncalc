@@ -820,7 +820,7 @@ const undeadSummon: Summon = {
                             type: 'slashing',
                         },
                     ],
-                    additionalText: (spellDC) => `. If the target is poisoned, it must succeed on a DC ${spellDC} Constitution saving throw against your spell save DC or be paralyzed until the end of its next turn`,
+                    additionalText: (spellDC) => `. If the target is poisoned, it must succeed on a DC ${spellDC} Constitution saving throw or be paralyzed until the end of its next turn`,
                 },
             ],
         },
@@ -850,7 +850,84 @@ const undeadSummon: Summon = {
     ],
 };
 
+
+
 const dragonSummon: Summon = {
+    id: 'dragon',
+    name: 'Draconic Spirit',
+    shortName: 'dragon',
+    spellName: 'Draconic',
+    minSpellLevel: 5,
+    page: 21,
+    size: 'large',
+    type: 'dragon',
+    baseAC: 14,
+    hp: {
+        base: 50,
+        perLevel: 10,
+    },
+    speed: {
+        walk: 30,
+        fly: { speed: 80 },
+        swim: 30,
+    },
+    abilityScores: {
+        str: 19,
+        dex: 14,
+        con: 17,
+        int: 10,
+        wis: 14,
+        cha: 14,
+    },
+    conditionImmunities: ['charmed', 'frightened', 'poisoned'],
+    blindsight: 30,
+    languages: ['Draconic', understandsLanguages],
+    traits: [
+        {
+            name: 'Shared Resistances',
+            content: 'When you summon the dragon, choose one of its damage resistances. You have resistance to the chosen damage type until the spell ends.',
+        },
+    ],
+    multiattack: (_, spellLevel) => `The dragon makes ${toWords(Math.floor(spellLevel / 2))} Rend attacks and uses its Breath Weapon.`,
+    attacks: [
+        {
+            name: 'Rend',
+            type: 'melee',
+            weapon: 'weapon',
+            range: 10,
+            target: 'target',
+            damage: [
+                {
+                    dice: {
+                        number: 1,
+                        size: '6',
+                    },
+                    modifier: 4,
+                    type: 'piercing',
+                },
+            ],
+        },
+    ],
+    actions: [
+        {
+            name: 'Breath Weapon',
+            content: (spellDC) => `The dragon exhales destructive energy in a 30-foot cone. Each creature in that area must make a DC ${spellDC} Dexterity saving throw. A creature takes 2d6 damage of a type this dragon has resistance to (your choice) on a failed save, or half as much damage on a successful one.`,
+        },
+    ],
+    modes: [
+        { name: 'Chromatic', damageResistances: ['acid', 'cold', 'fire', 'lightning', 'poison'] },
+        { name: 'Gem', damageResistances: ['force', 'necrotic', 'psychic', 'radiant', 'thunder'] },
+        { name: 'Metallic', damageResistances: ['acid', 'cold', 'fire', 'lightning', 'poison'] },
+    ],
+    modeName: 'Family',
+    sourceName: 'Fizban\'s Treasury of Dragons',
+};
+
+export const defaultSummons: Summon[] = sortByName([aberrantSummon, beastSummon, celestialSummon, constructSummon, dragonSummon, elementalSummon, feySummon, fiendishSummon, shadowSummon, undeadSummon]);
+
+// UA
+
+const dragonSummonUA: Summon = {
     id: 'dragon-ua',
     name: 'Draconic Spirit',
     shortName: 'dragon',
@@ -923,5 +1000,4 @@ const dragonSummon: Summon = {
     isUA: true,
 };
 
-export const defaultSummons: Summon[] = sortByName([aberrantSummon, beastSummon, celestialSummon, constructSummon, elementalSummon, feySummon, fiendishSummon, shadowSummon, undeadSummon]);
-export const uaSummons: Summon[] = sortByName([dragonSummon]);
+export const uaSummons: Summon[] = sortByName([dragonSummonUA]);
