@@ -1,9 +1,9 @@
-export const options: string;
-export const optionRow: string;
+export const options: string
+export const optionRow: string
 interface Namespace {
-  options: string;
-  optionRow: string;
-  'option-row': string;
+	"options": string,
+	"optionRow": string,
+	"option-row": string,
 }
-declare const optionsScss: Namespace;
-export default optionsScss;
+declare const optionsScss: Namespace
+export default optionsScss

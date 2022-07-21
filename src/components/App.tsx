@@ -21,7 +21,9 @@ export const App: React.FC = () => {
   const [spellAttack, setSpellAttack] = React.useState(5);
   const [spellDC, setSpellDC] = React.useState(13);
   const [summon, setSummon] = React.useState(summons[0]);
-  const [summonMode, setSummonMode] = React.useState(summon.modes[0]);
+  const [summonMode, setSummonMode] = React.useState(
+    summon.modes ? summon.modes[0] : null
+  );
   const [spellLevel, setSpellLevel] = React.useState(summon.minSpellLevel);
 
   const loadNumberFromStorage = (
@@ -35,18 +37,26 @@ export const App: React.FC = () => {
     }
   };
 
-  const resetSummonState = () => {
-    const selectedSummon = summons[0];
-    const firstMode = selectedSummon.modes[0];
+  const selectSummon = (
+    selectedSummon: Summon = summons[0],
+    selectedMode: SummonMode | null = selectedSummon.modes
+      ? selectedSummon.modes[0]
+      : null
+  ) => {
+    const firstMode = selectedSummon.modes ? selectedSummon.modes[0] : null;
     setSummon(selectedSummon);
-    setSummonMode(firstMode);
+    setSummonMode(selectedMode);
     setSpellLevel(selectedSummon.minSpellLevel);
     localStorage.setItem(summonKey, selectedSummon.id);
-    localStorage.setItem(summonModeKey, firstMode.name.toLowerCase());
+    if (firstMode) {
+      localStorage.setItem(summonModeKey, firstMode.name.toLowerCase());
+    } else {
+      localStorage.removeItem(summonModeKey);
+    }
     localStorage.setItem(spellLevelId, selectedSummon.minSpellLevel.toString());
   };
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     loadNumberFromStorage(spellAttackId, setSpellAttack);
     loadNumberFromStorage(spellDCId, setSpellDC);
     loadNumberFromStorage(spellLevelId, setSpellLevel);
@@ -63,19 +73,13 @@ export const App: React.FC = () => {
       (summon) => summon.id === storedSummonId
     );
     if (selectedSummon) {
-      setSummon(selectedSummon);
-
       const storedModeName = localStorage.getItem(summonModeKey);
-      const selectedMode = selectedSummon.modes.find(
+      const selectedMode = selectedSummon.modes?.find(
         (mode) => mode.name.toLowerCase() === storedModeName?.toLowerCase()
       );
-      if (selectedMode) {
-        setSummonMode(selectedMode);
-      } else {
-        resetSummonState();
-      }
+      selectSummon(selectedSummon, selectedMode);
     } else {
-      resetSummonState();
+      selectSummon();
     }
   }, []);
 
@@ -84,7 +88,7 @@ export const App: React.FC = () => {
     setEnableUA(checked);
     localStorage.setItem(enableUAKey, checked.toString());
     if (!checked && summon.isUA) {
-      resetSummonState();
+      selectSummon();
     }
   };
 
@@ -98,7 +102,7 @@ export const App: React.FC = () => {
     setSpellAttack,
     setSpellDC,
     setSpellLevel,
-    setSummon,
+    selectSummon,
     setSummonMode,
   };
 
@@ -166,7 +170,8 @@ export const App: React.FC = () => {
             'Smashman' Williams
           </div>
           <div>
-            <span className={style.credit}>D&D by</span> Wizards of the Coast
+            <span className={style.credit}>D&amp;D by</span> Wizards of the
+            Coast
           </div>
           <div>
             <label className={style.credit}>

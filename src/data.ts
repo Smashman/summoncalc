@@ -985,7 +985,7 @@ export const defaultSummons: Summon[] = sortByName([
 
 // UA
 
-const dragonSummonUA: Summon = {
+const dragonSummonUA: SummonUA = {
   id: 'dragon-ua',
   name: 'Draconic Spirit',
   shortName: 'dragon',
@@ -1071,4 +1071,194 @@ const dragonSummonUA: Summon = {
   isUA: true,
 };
 
-export const uaSummons: Summon[] = sortByName([dragonSummonUA]);
+const deathSummonUA: SummonUA = {
+  id: 'reaper-ua',
+  name: 'Reaper Spirit',
+  shortName: 'reaper',
+  spellName: 'Death',
+  minSpellLevel: 4,
+  page: 11,
+  size: 'medium',
+  type: 'undead',
+  baseAC: 11,
+  hp: {
+    base: 40,
+    perLevel: 10,
+  },
+  speed: {
+    walk: 30,
+    fly: { speed: 30, hover: true },
+  },
+  abilityScores: {
+    str: 16,
+    dex: 16,
+    con: 16,
+    int: 16,
+    wis: 16,
+    cha: 16,
+  },
+  damageImmunities: ['necrotic', 'poison'],
+  conditionImmunities: ['charmed', 'frightened', 'paralyzed', 'poisoned'],
+  darkvision: 60,
+  languages: [understandsLanguages],
+  traits: [
+    {
+      name: 'Incorporeal Movement',
+      content:
+        'The reaper can move through other creatures and objects as if they were difficult terrain. If it ends its turn inside an object, it is shunted to the nearest unoccupied space and takes 1d10 force damage for every 5 feet traveled.',
+    },
+    {
+      name: 'Haunting Tracker',
+      content:
+        "You and the reaper can sense the direction and distance to the haunted creature if it's on the same plane of existence as you.",
+    },
+  ],
+  attacks: [
+    {
+      name: 'Reaping Scythe',
+      type: 'melee',
+      weapon: 'weapon',
+      range: 5,
+      target: 'target',
+      damage: [
+        {
+          dice: {
+            number: 1,
+            size: '10',
+          },
+          modifier: 3,
+          type: 'necrotic',
+        },
+      ],
+    },
+  ],
+  sourceName: 'Unearthed Arcana 2022: Wonders of the Multiverse',
+  isUA: true,
+};
+
+const warriorSummonUA: SummonUA = {
+  id: 'warrior-ua',
+  name: 'Warrior Spirit',
+  shortName: 'warrior',
+  spellName: 'Warrior',
+  minSpellLevel: 3,
+  page: 11,
+  size: 'medium',
+  type: 'undead',
+  baseAC: 13,
+  hp: {
+    base: 30,
+    perLevel: 10,
+  },
+  speed: {
+    walk: 30,
+  },
+  abilityScores: {
+    str: 16,
+    dex: 16,
+    con: 14,
+    int: 10,
+    wis: 16,
+    cha: 9,
+  },
+  damageResistances: ['poison'],
+  conditionImmunities: ['charmed', 'poisoned'],
+  languages: ['Common', understandsLanguages],
+  modeName: 'type',
+  modes: [
+    {
+      name: 'Barbarian',
+      attacks: [
+        {
+          name: 'Reckless Strike',
+          type: 'melee',
+          weapon: 'weapon',
+          advantage: true,
+          range: 5,
+          target: 'target',
+          damage: [
+            {
+              dice: {
+                number: 1,
+                size: '12',
+              },
+              modifier: 3,
+              type: 'slashing',
+            },
+          ],
+          additionalText:
+            ', and attacks made against the warrior until the start of its next turn are made with advantage',
+        },
+      ],
+    },
+    {
+      name: 'Fighter',
+      baseAC: 15,
+      attacks: [
+        {
+          name: 'Rallying Strike',
+          type: 'melee or ranged',
+          weapon: 'weapon',
+          range: '5 ft., or range 20/60',
+          target: 'target',
+          damage: [
+            {
+              dice: {
+                number: 1,
+                size: '6',
+              },
+              modifier: 3,
+              type: 'piercing',
+            },
+          ],
+          additionalText:
+            ', and the warrior can choose another creature it can see within 20 feet of itself. The chosen creature gains 1d6 temporary hit points',
+        },
+      ],
+    },
+    {
+      name: 'Monk',
+      hp: {
+        base: 20,
+      },
+      speed: {
+        walk: 40,
+      },
+      attacks: [
+        {
+          name: 'Unarmed Strike',
+          type: 'melee',
+          weapon: 'weapon',
+          range: 5,
+          target: 'target',
+          damage: [
+            {
+              dice: {
+                number: 1,
+                size: '4',
+              },
+              modifier: 3,
+              type: 'bludgeoning',
+            },
+          ],
+          additionalText: (spellDC) =>
+            `, and the target must succeed on a DC ${spellDC} Strength saving throw or be knocked prone`,
+        },
+      ],
+      bonusActions: [
+        {
+          name: 'Flurry of Blows',
+          content: 'The warrior makes one Unarmed Strike attack.',
+        },
+      ],
+    },
+  ],
+  sourceName: 'Unearthed Arcana 2022: Wonders of the Multiverse',
+  isUA: true,
+};
+
+export const uaSummons: Summon[] = sortByName([
+  dragonSummonUA,
+  deathSummonUA,
+  warriorSummonUA,
+]);

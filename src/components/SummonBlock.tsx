@@ -94,41 +94,47 @@ const renderDmg = (damage: Damage[], spellLevel: SpellLevel) => (
 
 const mergeModeIntoSummon = (
   summonIn: Summon,
-  summonMode: SummonMode
+  summonMode: SummonMode | null
 ): Summon => {
-  const summon: Summon = {
-    ...summonIn,
-    ...summonMode,
-    name: summonIn.name,
-    hp: { ...summonIn.hp, ...summonMode.hp },
-    speed: { ...summonIn.speed, ...summonMode.speed },
-    damageResistances: [
-      ...(summonIn.damageResistances || []),
-      ...(summonMode.damageResistances || []),
-    ],
-    damageImmunities: [
-      ...(summonIn.damageImmunities || []),
-      ...(summonMode.damageImmunities || []),
-    ],
-    conditionImmunities: [
-      ...(summonIn.conditionImmunities || []),
-      ...(summonMode.conditionImmunities || []),
-    ],
-    traits: [...(summonIn.traits || []), ...(summonMode.traits || [])],
-    attacks: [...(summonIn.attacks || []), ...(summonMode.attacks || [])],
-    actions: [...(summonIn.actions || []), ...(summonMode.actions || [])],
-    bonusActions: [
-      ...(summonIn.bonusActions || []),
-      ...(summonMode.bonusActions || []),
-    ],
-    reactions: [...(summonIn.reactions || []), ...(summonMode.reactions || [])],
-  };
-  return summon;
+  if (summonMode) {
+    const summon: Summon = {
+      ...summonIn,
+      ...summonMode,
+      name: summonIn.name,
+      hp: { ...summonIn.hp, ...summonMode.hp },
+      speed: { ...summonIn.speed, ...summonMode.speed },
+      damageResistances: [
+        ...(summonIn.damageResistances || []),
+        ...(summonMode.damageResistances || []),
+      ],
+      damageImmunities: [
+        ...(summonIn.damageImmunities || []),
+        ...(summonMode.damageImmunities || []),
+      ],
+      conditionImmunities: [
+        ...(summonIn.conditionImmunities || []),
+        ...(summonMode.conditionImmunities || []),
+      ],
+      traits: [...(summonIn.traits || []), ...(summonMode.traits || [])],
+      attacks: [...(summonIn.attacks || []), ...(summonMode.attacks || [])],
+      actions: [...(summonIn.actions || []), ...(summonMode.actions || [])],
+      bonusActions: [
+        ...(summonIn.bonusActions || []),
+        ...(summonMode.bonusActions || []),
+      ],
+      reactions: [
+        ...(summonIn.reactions || []),
+        ...(summonMode.reactions || []),
+      ],
+    };
+    return summon;
+  }
+  return summonIn;
 };
 
 export interface SummonBlockProps {
   summon: Summon;
-  summonMode: SummonMode;
+  summonMode: SummonMode | null;
   spellLevel: number;
   spellAttack: number;
   spellDC: number;
@@ -145,7 +151,8 @@ export const SummonBlock: React.FC<SummonBlockProps> = ({
   return (
     <div className={style.summonBlock}>
       <div className={style.summonName}>
-        {summon.name} ({summonMode.name})
+        {summon.name}
+        {summonMode && ` (${summonMode.name})`}
       </div>
       <div className={style.typeLine}>
         {toTitleCase(summon.size)} {summon.type}
@@ -217,7 +224,7 @@ export const SummonBlock: React.FC<SummonBlockProps> = ({
           <span className={style.attackType}>
             {toTitleCase(attack.type)} {toTitleCase(attack.weapon)} Attack
           </span>
-          : +{spellAttack} to hit,{' '}
+          : +{spellAttack} to hit{attack.advantage && ' (with advantage)'},{' '}
           {attack.type === 'ranged' ? 'range' : 'reach'} {attack.range} ft., one{' '}
           {attack.target}. <span className={style.hit}>Hit: </span>
           {renderDmg(attack.damage, spellLevel)}

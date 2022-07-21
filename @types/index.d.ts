@@ -35,7 +35,7 @@ interface HP {
   perLevel: number;
 }
 
-type ContentFunc = (spellDC: SpellLevel, spellLevel: number) => string;
+type ContentFunc = (spellDC: number, spellLevel: SpellLevel) => string;
 
 interface Content {
   name: string;
@@ -85,8 +85,9 @@ interface Damage {
 
 interface Attack {
   name: string;
-  type: 'melee' | 'ranged';
+  type: 'melee' | 'ranged' | string;
   weapon: 'weapon' | 'spell';
+  advantage?: boolean;
   range: string | number;
   target: 'target' | 'creature';
   damage: Damage[];
@@ -126,10 +127,14 @@ interface Summon {
   actions?: Content[];
   bonusActions?: Content[];
   reactions?: Content[];
-  modes: SummonMode[];
+  modes?: SummonMode[];
   modeName?: string;
   sourceName?: string;
   isUA?: boolean;
+}
+
+interface SummonUA extends Summon {
+  isUA: true;
 }
 
 // type CharLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;

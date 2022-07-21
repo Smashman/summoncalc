@@ -22,13 +22,13 @@ export interface OptionsProps {
   spellDC: number;
   spellLevel: number;
   summon: Summon;
-  summonMode: SummonMode;
+  summonMode: SummonMode | null;
 
   setSpellAttack: React.Dispatch<React.SetStateAction<number>>;
   setSpellDC: React.Dispatch<React.SetStateAction<number>>;
   setSpellLevel: React.Dispatch<React.SetStateAction<number>>;
-  setSummon: React.Dispatch<React.SetStateAction<Summon>>;
-  setSummonMode: React.Dispatch<React.SetStateAction<SummonMode>>;
+  selectSummon: (selectedSummon?: Summon) => void;
+  setSummonMode: React.Dispatch<React.SetStateAction<SummonMode | null>>;
 }
 
 export const Options: React.FC<OptionsProps> = ({
@@ -41,24 +41,18 @@ export const Options: React.FC<OptionsProps> = ({
   setSpellAttack,
   setSpellDC,
   setSpellLevel,
-  setSummon,
+  selectSummon,
   setSummonMode,
 }) => {
   const handleSummonChange: React.ChangeEventHandler<HTMLSelectElement> = (
     e
   ) => {
     const selectedSummon = summons[e.target.selectedIndex];
-    const firstMode = selectedSummon.modes[0];
-    setSummon(selectedSummon);
-    setSummonMode(firstMode);
-    setSpellLevel(selectedSummon.minSpellLevel);
-    localStorage.setItem(summonKey, selectedSummon.id);
-    localStorage.setItem(summonModeKey, firstMode.name.toLowerCase());
-    localStorage.setItem(spellLevelId, selectedSummon.minSpellLevel.toString());
+    selectSummon(selectedSummon);
   };
 
   const handleModeChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const selectedMode = summon.modes[e.target.selectedIndex];
+    const selectedMode = summon.modes![e.target.selectedIndex];
     setSummonMode(selectedMode);
     localStorage.setItem(summonModeKey, selectedMode.name.toLowerCase());
   };
@@ -121,17 +115,24 @@ export const Options: React.FC<OptionsProps> = ({
           <label htmlFor="mode-select">
             {toTitleCase(summon.modeName || 'Form')}:{' '}
           </label>
-          <select
-            id="mode-select"
-            value={summonMode.name}
-            onChange={handleModeChange}
-          >
-            {summon.modes.map((mode, index) => (
-              <option value={mode.name} key={'mode' + index}>
-                {mode.name}
-              </option>
-            ))}
-          </select>
+
+          {summon.modes && summon.modes.length > 0 ? (
+            <select
+              id="mode-select"
+              value={summonMode!.name}
+              onChange={handleModeChange}
+            >
+              {summon.modes.map((mode, index) => (
+                <option value={mode.name} key={'mode' + index}>
+                  {mode.name}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <select disabled>
+              <option>None</option>
+            </select>
+          )}
         </div>
       </div>
       <div className={style.optionRow}>
