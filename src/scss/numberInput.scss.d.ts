@@ -1,7 +1,7 @@
-export const numberInput: string
+export const numberInput: string;
 interface Namespace {
-	"numberInput": string,
-	"number-input": string,
+  numberInput: string;
+  'number-input': string;
 }
-declare const numberInputScss: Namespace
-export default numberInputScss
+declare const numberInputScss: Namespace;
+export default numberInputScss;

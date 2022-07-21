@@ -5,190 +5,190 @@
 *,
 *:before,
 *:after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 :global html,
 :global body,
 :global #root {
-    height: 100%;
+  height: 100%;
 }
 
 $em-size: 16;
 
 body {
-    font-family: v.$open-sans;
-    margin: 0;
-    background: v.$panel-color;
-    color: v.$text-color;
-    font-size: #{$em-size}px;
+  font-family: v.$open-sans;
+  margin: 0;
+  background: v.$panel-color;
+  color: v.$text-color;
+  font-size: #{$em-size}px;
 }
 
 :global #noscript {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
-    #noscript-main {
-        background-color: v.$background-color;
-        flex-grow: 1;
-        font-size: 1.5em;
-        display: flex;
-        justify-content: center;
-        padding: 5em;
-    }
+  #noscript-main {
+    background-color: v.$background-color;
+    flex-grow: 1;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    padding: 5em;
+  }
 }
 
 a {
-    color: v.$text-color;
-    &:hover {
-        color: color.scale(v.$text-color, $lightness: -20%);
-    }
+  color: v.$text-color;
+  &:hover {
+    color: color.scale(v.$text-color, $lightness: -20%);
+  }
 }
 
 .app {
-    display: flex;
-    background-color: v.$background-color;
-    min-height: 100%;
-    flex-direction: column;
+  display: flex;
+  background-color: v.$background-color;
+  min-height: 100%;
+  flex-direction: column;
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    align-items: center;
-    padding: 3em 1em;
-    flex-grow: 1;
-    gap: 3em;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  padding: 3em 1em;
+  flex-grow: 1;
+  gap: 3em;
 }
 
 input,
 select,
 button {
-    font-size: inherit;
-    font-family: inherit;
-    color: v.$text-color;
-    background-color: v.$background-color;
-    border: #{(1 / $em-size)}em solid v.$accent-color;
-    border-radius: #{(4 / $em-size)}em;
-    padding: #{(4 / $em-size)}em;
+  font-size: inherit;
+  font-family: inherit;
+  color: v.$text-color;
+  background-color: v.$background-color;
+  border: #{(1 / $em-size)}em solid v.$accent-color;
+  border-radius: #{(4 / $em-size)}em;
+  padding: #{(4 / $em-size)}em;
 }
 
 input[type='checkbox'] {
-    $border-size: 1 / $em-size;
-    $padding-size: 1 / $em-size;
+  $border-size: 1 / $em-size;
+  $padding-size: 1 / $em-size;
 
-    appearance: none;
-    height: 1em;
-    width: 1em;
-    border: #{$border-size}em solid v.$accent-color;
-    margin: 0;
-    margin-left: #{4 / $em-size}em;
-    position: relative;
-    padding: 0;
+  appearance: none;
+  height: 1em;
+  width: 1em;
+  border: #{$border-size}em solid v.$accent-color;
+  margin: 0;
+  margin-left: #{4 / $em-size}em;
+  position: relative;
+  padding: 0;
 
-    &:checked:after {
-        content: ' ';
-        position: absolute;
-        $checkbox-width: 1 - (2 * $border-size) - (2 * $padding-size);
-        width: #{$checkbox-width}em;
-        height: #{$checkbox-width/2}em;
-        border: v.$accent-color solid #{$border-size * 2}em;
-        border-top: 0;
-        border-right: 0;
-        transform: rotate(-45deg);
-        top: #{$padding-size + $border-size}em;
-        left: #{$padding-size}em;
-    }
+  &:checked:after {
+    content: ' ';
+    position: absolute;
+    $checkbox-width: 1 - (2 * $border-size) - (2 * $padding-size);
+    width: #{$checkbox-width}em;
+    height: #{$checkbox-width/2}em;
+    border: v.$accent-color solid #{$border-size * 2}em;
+    border-top: 0;
+    border-right: 0;
+    transform: rotate(-45deg);
+    top: #{$padding-size + $border-size}em;
+    left: #{$padding-size}em;
+  }
 }
 
 $header-footer-border: 0.4em solid v.$accent-color;
 
 header,
 footer {
-    width: 100%;
-    background: v.$panel-color;
-    padding: 1em;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  background: v.$panel-color;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
 }
 header {
-    border-bottom: $header-footer-border;
-    h1 {
-        font-family: v.$spectral-sc;
-        font-size: 2em;
-        color: v.$accent-color;
-        font-weight: normal;
-        margin: 0;
-        margin-bottom: 0.3em;
-    }
-    h2 {
-        font-size: 1.2em;
-        font-weight: normal;
-        font-style: italic;
-        margin: 0;
-    }
-    .info {
-        text-align: right;
-        color: v.$dim-text;
-        max-width: 40%;
-        display: flex;
-        flex-direction: column;
-        gap: 0.2em;
-        justify-content: center;
+  border-bottom: $header-footer-border;
+  h1 {
+    font-family: v.$spectral-sc;
+    font-size: 2em;
+    color: v.$accent-color;
+    font-weight: normal;
+    margin: 0;
+    margin-bottom: 0.3em;
+  }
+  h2 {
+    font-size: 1.2em;
+    font-weight: normal;
+    font-style: italic;
+    margin: 0;
+  }
+  .info {
+    text-align: right;
+    color: v.$dim-text;
+    max-width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    justify-content: center;
 
-        .info-tag-line {
-            color: v.$text-color;
-            font-size: 1.1em;
-        }
+    .info-tag-line {
+      color: v.$text-color;
+      font-size: 1.1em;
     }
+  }
 }
 footer {
-    border-top: $header-footer-border;
-    text-align: right;
+  border-top: $header-footer-border;
+  text-align: right;
 
-    #github-link {
-        svg {
-            height: 72px;
-            width: 72px;
-        }
-        & .github-logo {
-            fill: color.scale(v.$panel-color, $lightness: 10%);
-        }
-        &:hover .github-logo {
-            fill: color.scale(v.$panel-color, $lightness: 20%);
-        }
+  #github-link {
+    svg {
+      height: 72px;
+      width: 72px;
     }
-
-    .credits {
-        color: v.$dim-text;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 0.2em;
-
-        .credit {
-            color: v.$text-color;
-            font-weight: bold;
-        }
+    & .github-logo {
+      fill: color.scale(v.$panel-color, $lightness: 10%);
     }
+    &:hover .github-logo {
+      fill: color.scale(v.$panel-color, $lightness: 20%);
+    }
+  }
+
+  .credits {
+    color: v.$dim-text;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2em;
+
+    .credit {
+      color: v.$text-color;
+      font-weight: bold;
+    }
+  }
 }
 
 @media screen and (max-width: 34em) {
-    header,
-    footer {
-        text-align: center;
-        gap: 1em;
+  header,
+  footer {
+    text-align: center;
+    gap: 1em;
+  }
+  header {
+    flex-direction: column;
+    .info {
+      text-align: center;
+      max-width: 100%;
     }
-    header {
-        flex-direction: column;
-        .info {
-            text-align: center;
-            max-width: 100%;
-        }
-    }
-    footer {
-        flex-direction: column-reverse;
-    }
+  }
+  footer {
+    flex-direction: column-reverse;
+  }
 }

@@ -1,16 +1,16 @@
 @use 'variables' as v;
 
 .options {
-    background-color: v.$panel-color;
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3em;
+  background-color: v.$panel-color;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
 
-    .option-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        gap: 1.5em;
-    }
+  .option-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1.5em;
+  }
 }

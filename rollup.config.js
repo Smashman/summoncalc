@@ -7,31 +7,31 @@ import { terser } from 'rollup-plugin-terser';
 const prod = process.env.NODE_ENV === 'production';
 
 const plugins = [
-    postcss({
-        modules: true,
-        extract: true,
-        writeDefinitions: true,
-    }),
-    commonjs(),
-    typescript(),
-    nodeResolve(),
+  postcss({
+    modules: true,
+    extract: true,
+    writeDefinitions: true,
+  }),
+  commonjs(),
+  typescript(),
+  nodeResolve(),
 ];
 
 if (prod) {
-    plugins.push(terser());
+  plugins.push(terser());
 }
 
 export default {
-    input: 'src/main.ts',
-    output: {
-        file: 'dist/bundle.js',
-        format: 'iife',
-        sourcemap: !prod,
-        globals: {
-            react: 'React',
-            'react-dom': 'ReactDOM',
-        },
+  input: 'src/main.ts',
+  output: {
+    file: 'dist/bundle.js',
+    format: 'iife',
+    sourcemap: !prod,
+    globals: {
+      react: 'React',
+      'react-dom': 'ReactDOM',
     },
-    external: ['react', 'react-dom'],
-    plugins,
+  },
+  external: ['react', 'react-dom'],
+  plugins,
 };
